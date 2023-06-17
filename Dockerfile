@@ -17,7 +17,7 @@ RUN \
   mkdir -p /root-layer/themes/transmission-web-control && \
   tar xzf \
     /tmp/transmission-web-control.tar.gz -C \
-    /root-layer/themes/transmission-web-control "*/src" --strip-components=2 && \
+    /root-layer/themes/transmission-web-control "*/src" --strip-components=2
 
 # copy local files
 COPY root/ /root-layer/

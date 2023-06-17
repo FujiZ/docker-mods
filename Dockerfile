@@ -4,17 +4,18 @@ FROM ghcr.io/linuxserver/baseimage-alpine:3.17 as buildstage
 
 ARG MOD_VERSION
 
+RUN echo "**** grab transmission-web-control ****"
+RUN mkdir -p /root-layer/themes
 RUN \
-  echo "**** grab transmission-web-control ****" && \
-  mkdir -p /root-layer/themes && \
   if [ -z ${MOD_VERSION+x} ]; then \
     MOD_VERSION=$(curl -s "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
     | jq -rc ".tag_name"); \
-  fi && \
-  curl -o \
-    /tmp/transmission-web-control.tar.gz -L \
-    "https://github.com/ronggang/transmission-web-control/archive/refs/tags/${MOD_VERSION}.tar.gz" && \
-  mkdir -p /root-layer/themes/transmission-web-control && \
+  fi
+RUN curl -o /tmp/transmission-web-control.tar.gz -L \
+    "https://github.com/ronggang/transmission-web-control/archive/refs/tags/${MOD_VERSION}.tar.gz"
+RUN ls -l /tmp/transmission-web-control.tar.gz && file /tmp/transmission-web-control-tar.gz
+RUN mkdir -p /root-layer/themes/transmission-web-control
+RUN \
   tar xzf \
     /tmp/transmission-web-control.tar.gz -C \
     /root-layer/themes/transmission-web-control --wildcards "*/src" --strip-components=2

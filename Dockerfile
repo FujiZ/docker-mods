@@ -11,9 +11,10 @@ RUN \
     MOD_VERSION=$(curl -s "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
     | jq -rc ".tag_name"); \
   fi
+RUN echo "${MOD_VERSION}"
 RUN curl -o /tmp/transmission-web-control.tar.gz -L \
     "https://github.com/ronggang/transmission-web-control/archive/refs/tags/${MOD_VERSION}.tar.gz"
-RUN ls -l /tmp/transmission-web-control.tar.gz && file /tmp/transmission-web-control-tar.gz
+RUN ls -lh /tmp/transmission-web-control.tar.gz
 RUN mkdir -p /root-layer/themes/transmission-web-control
 RUN \
   tar xzf \
